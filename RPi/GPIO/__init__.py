@@ -18,6 +18,10 @@ def setmode(*args):
     pass
 
 
+def setwarnings(*args):
+    pass
+
+
 def cleanup(*args):
     pass
 

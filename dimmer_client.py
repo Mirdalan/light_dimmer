@@ -9,8 +9,8 @@ def zmq_data_transmit(_data):
 
 
 pwm_duty_cycles = {
-    "sypialnia": 100,
-    "maly_pokoj": 100,
+    "bedroom": 0.0,
+    "small_room": 0.0,
 }
 
 while True:
@@ -19,6 +19,8 @@ while True:
             pwm_duty_cycles[room] = float(input("Podaj wypelnienie dla pomieszczenia %s: " % room))
         zmq_data_transmit(pwm_duty_cycles)
         print("")
+    except ValueError as e:
+        print("\n%s\n" % e)
     except KeyboardInterrupt:
         print("\nShutting down...\n")
         break
