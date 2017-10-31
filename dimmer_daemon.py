@@ -1,27 +1,16 @@
-import logging
 import sys
 import signal
-#TODO: configuration in seperate file
-#TODO: debug possible client communication problem?
-logger = logging.getLogger('Dimmer control daemon')
-logger.setLevel(logging.ERROR)
-fh = logging.FileHandler('dimmer_control.log')
-formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
-fh.setFormatter(formatter)
-logger.addHandler(fh)
-logger.debug("Initializing service...")
 
-try:
-    from RPi import GPIO
-except RuntimeError:
-    logging.critical("Could not import RPi.GPIO. Probably didn't have privileges.")
-    sys.exit(1)
-try:
-    import zmq
-except RuntimeError:
-    logging.critical("Could not import zmq. Probably not installed or using wrong Python interpreter / virtualenv. "
-                     "Try installing it: pip3 install zmq")
-    sys.exit(1)
+from RPi import GPIO
+import zmq
+
+from logger_configuration import configure_logger
+#TODO: configuration in seperate file
+
+
+# ---------------- INITIATING LOGGER ---------------
+logger = configure_logger()
+logger.debug("Initializing service...")
 
 
 def zmq_data_receive():
@@ -77,14 +66,21 @@ class DimmersController:
         }
 
     def set(self, requested_levels):
+        """ Sets duty cycles according to requested light levels """
         for room, level in requested_levels.items():
             logger.debug("Setting duty cycle for %s dimmer to %f." % (room, level))
             self.dimmers[room].set_duty_cycle(level)
 
     @staticmethod
     def shutdown(signum, frame):
+        """
+        Shuts down whole service.
+        Executed by SIGTERM signal which is sent by 'systemctl stop dimmers_control' command.
+        :param signum, frame: required by signal but not used.
+        """
         logger.debug("Shutting down...")
         GPIO.cleanup()
+        logger.debug("Bye.")
         sys.exit(0)
 
 
@@ -92,7 +88,7 @@ if __name__ == '__main__':
     dimmers_control = DimmersController()
     signal.signal(signal.SIGTERM, dimmers_control.shutdown)
 
-    logger.debug("Initialized. Starting loop.")
+    logger.debug("Initialized. Starting main loop.")
     while True:
         try:
             requested_light_levels = zmq_data_receive()
@@ -100,7 +96,7 @@ if __name__ == '__main__':
             dimmers_control.set(requested_light_levels)
         except KeyboardInterrupt as e:
             logger.error(repr(e))
-            dimmers_control.shutdown()
+            dimmers_control.shutdown(0, 0)
             break
         except Exception as e:
             logger.error(e.__class__.__name__ + " in line " + str(e.__traceback__.tb_lineno) + ": " + str(e))

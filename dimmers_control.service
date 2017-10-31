@@ -4,6 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
+User=root
 WorkingDirectory=/home/pi/light_dimmer
 ExecStart=+/usr/bin/python3 /home/pi/light_dimmer/dimmer_daemon.py
 KillMode=process
