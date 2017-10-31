@@ -13,12 +13,16 @@ pwm_duty_cycles = {
     "bedroom": 0.0,
     "small_room": 0.0,
 }
+control_data = {
+    'method': 'soft',
+    'requested_levels': pwm_duty_cycles
+}
 
 while True:
     try:
         for room in pwm_duty_cycles.keys():
             pwm_duty_cycles[room] = float(input("Podaj wypelnienie dla pomieszczenia %s: " % room))
-        zmq_data_transmit(pwm_duty_cycles)
+        zmq_data_transmit(control_data)
         print("")
     except ValueError as e:
         print("\n%s\n" % e)

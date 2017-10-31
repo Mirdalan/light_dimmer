@@ -2,6 +2,8 @@ import logging
 import os
 from shutil import copyfile
 
+import configuration
+
 
 class DuplicateFilter(logging.Filter):
     """ a filter to suppress repeating log messages """
@@ -24,13 +26,13 @@ def backup_and_clear_logfile(_log_file_name):
         pass
 
 
-def configure_logger(log_file_name="dimmer_control.log",
-                     _log_level=logging.DEBUG,
+def configure_logger(log_file_name=configuration.log_file_name,
+                     log_level=configuration.log_level,
                      log_file_size_limit_bytes=1024*1024):
     """
     Configures logger according to parameters:
     :param log_file_name: name of log file to write to
-    :param _log_level:
+    :param log_level:
     :param log_file_size_limit_bytes: if the limit exceeds file will be backed up and cleared
     :return: preconfigured logger object
     """
@@ -45,7 +47,6 @@ def configure_logger(log_file_name="dimmer_control.log",
 
     logs_formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
     log_file.setFormatter(logs_formatter)
-    log_level = _log_level
     _logger.addFilter(DuplicateFilter())
     _logger.addHandler(log_file)
     _logger.setLevel(log_level)
