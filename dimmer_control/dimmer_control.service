@@ -1,0 +1,13 @@
+[Unit]
+Description= Raspberry PI GPIO software PWM based light dimmers controller
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/pi/dimmer_control
+ExecStart=+/usr/bin/python3 /home/pi/dimmer_control/dimmer_daemon.py
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
