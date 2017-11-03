@@ -19,5 +19,5 @@ def user_profile(room, level):
     request_set_light_levels({room: int(level)})
     return redirect('/')
 
-# $ set FLASK_APP=main.py
+# $ set FLASK_APP=dimmer_site.py
 # $ flask run
