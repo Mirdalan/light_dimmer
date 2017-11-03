@@ -23,11 +23,13 @@
 	<![endif]-->
 </head>
 <body style="background-color: #9b969c">
-<div class="container limit center"  style="background-color: #5b566c">
-	<h1 class="center herotype blue text-shadow">Dimmers controller</h1>
+<div class="container limit center"  style="padding-top: 0px; background-color: #5b566c">
+	<table class="tbl alternate center narrow dark push-30"><tbody><tr><td>
+        <h1 class="center blue text-shadow">Dimmers controller</h1>
+    </td></tr></tbody></table>
 	<div class="row">
     {% for room in rooms %}
-    <div class="col of-{{ columns }}">
+    <div class="col of-{{ columns }} push-30">
 		<h2 class="herotype center silver">{{ room }}</h2>
         {% for level in levels %}
             <a href="/{{ room }}/set_level/{{ level }}" class="btn-touch-round green" aria-label="navigation">
