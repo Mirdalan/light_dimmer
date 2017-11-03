@@ -7,7 +7,11 @@ import configuration
 
 def request_set_light_levels(control_data):
     zmq_client = zmq.Context().socket(zmq.REQ)
-    zmq_client.connect(configuration.transfer_protocol)
+    try:
+        zmq_client.connect(configuration.transfer_protocol)
+    except zmq.error.ZMQError as e:
+        print(configuration.transfer_protocol + str(e))
+        return
     zmq_client.send_pyobj(control_data)
 
 
