@@ -1,0 +1,14 @@
+[Unit]
+Description=Mini site - interface to dimmer controller
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Environment=FLASK_APP=main.py
+WorkingDirectory=/home/pi/dimmer_control
+ExecStart=+/usr/bin/flask run --host 192.168.0.52 --port 80
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 9]> <html class="lt-ie9" lang="en" dir="ltr"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="" lang="en" dir="ltr"> <!--<![endif]-->
+
+<head>
+	<meta charset="utf-8">
+	<title>Dimmer control mini site</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="author" content="Michał Chrzanowski">
+	<link rel="shortcut icon" href="static/favicon.png">
+	
+	<!-- CSS -->
+	<link href="static/css/spark.min.css" rel="stylesheet">
+	
+	<!-- JS -->
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="static/js/spark.min.js"></script>
+	
+	<!-- Support for IE8 HTML5 elements -->
+	<!--[if lt IE 9]>
+		<script src="static/js/html5shiv.js"></script>
+	<![endif]-->
+</head>
+<body style="background-color: #9b969c">
+<div class="container limit center"  style="background-color: #5b566c">
+	<h1 class="center herotype blue text-shadow">Dimmers controller</h1>
+	<div class="row">
+    {% for room in rooms %}
+    <div class="col of-{{ columns }}">
+		<h2 class="herotype center silver">{{ room }}</h2>
+        {% for level in levels %}
+            <a href="/{{ room }}/set_level/{{ level }}" class="btn-touch-round green" aria-label="navigation">
+              <span class="circle">
+                <span class="inner-circle"></span>
+              </span>
+            </a>
+        {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</body>
+</html>
