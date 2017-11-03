@@ -1,7 +1,7 @@
 # Light dimmer for Raspberry Pi
 
 The project made as part of my custom home automation solution.
-This is pure Python 3 project tested on Python 3.6. 
+This is Python 3 project tested on Python 3.5 and 3.6. 
 Since it's quite simple it may work on older versions, but I won't recommend trying that.
 
 This project uses:
