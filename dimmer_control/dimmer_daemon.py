@@ -112,8 +112,7 @@ class DimmersController:
 
 
 if __name__ == '__main__':
-    logger.debug("Initiating communication server.")
-
+    logger.debug("Initiating dimmer instances.")
     dimmers_control = DimmersController()
     logger.debug("Configuring SIGTERM signal handler.")
     signal.signal(signal.SIGTERM, dimmers_control.systemd_shutdown)

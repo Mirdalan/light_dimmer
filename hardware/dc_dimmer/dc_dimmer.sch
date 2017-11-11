@@ -1,0 +1,205 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:switches
+LIBS:relays
+LIBS:motors
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:dc_dimmer-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L IRF540N Q?
+U 1 1 5A00A662
+P 3800 2500
+F 0 "Q?" H 4050 2575 50  0000 L CNN
+F 1 "IRFBC40" H 4050 2500 50  0000 L CNN
+F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 4050 2425 50  0001 L CIN
+F 3 "" H 3800 2500 50  0001 L CNN
+	1    3800 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L IRF540N Q?
+U 1 1 5A00A810
+P 3200 2800
+F 0 "Q?" H 3450 2875 50  0000 L CNN
+F 1 "IRL3803" H 3450 2800 50  0000 L CNN
+F 2 "TO_SOT_Packages_THT:TO-220_Vertical" H 3450 2725 50  0001 L CIN
+F 3 "" H 3200 2800 50  0001 L CNN
+	1    3200 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R?
+U 1 1 5A00A8E3
+P 3900 2100
+F 0 "R?" V 3980 2100 50  0000 C CNN
+F 1 "load" V 3900 2100 50  0000 C CNN
+F 2 "" V 3830 2100 50  0001 C CNN
+F 3 "" H 3900 2100 50  0001 C CNN
+	1    3900 2100
+	-1   0    0    1   
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5A00ABEF
+P 3900 3250
+F 0 "#PWR?" H 3900 3000 50  0001 C CNN
+F 1 "GND" H 3900 3100 50  0000 C CNN
+F 2 "" H 3900 3250 50  0001 C CNN
+F 3 "" H 3900 3250 50  0001 C CNN
+	1    3900 3250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 2700 3900 3250
+$Comp
+L +3.3V #PWR?
+U 1 1 5A00B9CA
+P 2100 1900
+F 0 "#PWR?" H 2100 1750 50  0001 C CNN
+F 1 "+3.3V" H 2100 2040 50  0000 C CNN
+F 2 "" H 2100 1900 50  0001 C CNN
+F 3 "" H 2100 1900 50  0001 C CNN
+	1    2100 1900
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR?
+U 1 1 5A00B9E6
+P 3300 1900
+F 0 "#PWR?" H 3300 1750 50  0001 C CNN
+F 1 "+5V" H 3300 2040 50  0000 C CNN
+F 2 "" H 3300 1900 50  0001 C CNN
+F 3 "" H 3300 1900 50  0001 C CNN
+	1    3300 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3300 1900 3300 2050
+Wire Wire Line
+	3300 2350 3300 2600
+Wire Wire Line
+	2100 1900 2100 2900
+$Comp
+L R R?
+U 1 1 5A00BADC
+P 3300 2200
+F 0 "R?" V 3380 2200 50  0000 C CNN
+F 1 "10k" V 3300 2200 50  0000 C CNN
+F 2 "" V 3230 2200 50  0001 C CNN
+F 3 "" H 3300 2200 50  0001 C CNN
+	1    3300 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R?
+U 1 1 5A00BB78
+P 2650 2800
+F 0 "R?" V 2730 2800 50  0000 C CNN
+F 1 "150R" V 2650 2800 50  0000 C CNN
+F 2 "" V 2580 2800 50  0001 C CNN
+F 3 "" H 2650 2800 50  0001 C CNN
+	1    2650 2800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2100 2800 2500 2800
+Wire Wire Line
+	2800 2800 3000 2800
+$Comp
+L +48V #PWR?
+U 1 1 5A00BCAD
+P 3900 1900
+F 0 "#PWR?" H 3900 1750 50  0001 C CNN
+F 1 "+48V" H 3900 2040 50  0000 C CNN
+F 2 "" H 3900 1900 50  0001 C CNN
+F 3 "" H 3900 1900 50  0001 C CNN
+	1    3900 1900
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5A075566
+P 3300 3250
+F 0 "#PWR?" H 3300 3000 50  0001 C CNN
+F 1 "GND" H 3300 3100 50  0000 C CNN
+F 2 "" H 3300 3250 50  0001 C CNN
+F 3 "" H 3300 3250 50  0001 C CNN
+	1    3300 3250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 1900 3900 1950
+Wire Wire Line
+	3900 2250 3900 2300
+Wire Wire Line
+	3300 3000 3300 3250
+Wire Wire Line
+	3300 2500 3600 2500
+Connection ~ 3300 2500
+$Comp
+L R R?
+U 1 1 5A0760E0
+P 2100 3050
+F 0 "R?" V 2180 3050 50  0000 C CNN
+F 1 "10k" V 2100 3050 50  0000 C CNN
+F 2 "" V 2030 3050 50  0001 C CNN
+F 3 "" H 2100 3050 50  0001 C CNN
+	1    2100 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5A0760F4
+P 2100 3250
+F 0 "#PWR?" H 2100 3000 50  0001 C CNN
+F 1 "GND" H 2100 3100 50  0000 C CNN
+F 2 "" H 2100 3250 50  0001 C CNN
+F 3 "" H 2100 3250 50  0001 C CNN
+	1    2100 3250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2100 3200 2100 3250
+Connection ~ 2100 2800
+$EndSCHEMATC

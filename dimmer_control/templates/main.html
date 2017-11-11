@@ -30,9 +30,14 @@
 	<div class="row">
     {% for room in rooms %}
     <div class="col of-{{ columns }} push-30">
-		<h2 class="herotype center lime">{{ room }}</h2>
+		<h2 class="herotype center lime">{{ room }} {{ current_level }}</h2>
+
         {% for level in levels %}
-            <a href="/{{ room }}/set_level/{{ level }}" class="btn-touch-round white" aria-label="navigation">
+            {% if current_level is equalto level %}
+                <a href="/{{ room }}/set_level/{{ level }}" class="btn-touch-round orange" aria-label="navigation">
+            {% else %}
+                <a href="/{{ room }}/set_level/{{ level }}" class="btn-touch-round white" aria-label="navigation">
+            {% endif %}
               <span class="circle">
                 <span class="inner-circle"></span>
               </span>
