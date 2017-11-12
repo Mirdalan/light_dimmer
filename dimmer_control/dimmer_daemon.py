@@ -7,7 +7,7 @@ import zmq
 import configuration
 from logger_configuration import configure_logger
 
-from RPi import GPIO
+import wiringpi
 
 # ---------------- INITIATING LOGGER ---------------
 logger = configure_logger()
@@ -25,30 +25,27 @@ class Dimmer:
     """
     Single dimmer object allowing to control the dimmer features.
     """
-    def __init__(self, pin_number, frequency=30, duty_cycle=0, name=''):
+    def __init__(self, pin_number, duty_cycle=0, name=''):
         """
         Initializing a single Dimmer object with given or default parameters:
-        :param pin_number: Raspberry PI GPIO channel according to GPIO.setmode
+        :param pin_number: Raspberry PI GPIO channel according to wiringPiSetup...
         :param duty_cycle: PWM duty cycle
-        :param frequency: PWM frequency
         """
         self.name = name
         logger.debug("Initiating dimmer %s." % self.name)
-        GPIO.setup(pin_number, GPIO.OUT)
-        self.pwm = GPIO.PWM(pin_number, frequency)
-        self.pwm.start(duty_cycle)
+        wiringpi.pinMode(pin_number, wiringpi.PWM_OUTPUT)
         self.pin_number = pin_number
         self.duty_cycle = duty_cycle
 
     def set_duty_cycle(self, duty_cycle):
         """ sets a given duty cycle """
+        wiringpi.pwmWrite(self.pin_number, duty_cycle)
         self.duty_cycle = duty_cycle
-        self.pwm.ChangeDutyCycle(duty_cycle)
 
     def shutdown(self):
-        """ Cleans RPi GPIO configuration for this dimmer GPIO channel """
+        """ Cleans GPIO configuration for this dimmer GPIO channel """
         logger.debug("Shutting down dimmer %s." % self.name)
-        GPIO.cleanup(self.pin_number)
+        wiringpi.pinMode(self.pin_number, wiringpi.INPUT)
 
 
 class DimmersController:
@@ -60,11 +57,10 @@ class DimmersController:
         Initializes the GPIO by setting its mode.
         Initializes a dict of dimmers.
         """
-        GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BOARD)
+        wiringpi.wiringPiSetupGpio()
         self.dimmers = {}
-        for room, args in configuration.dimmers.items():
-            self.dimmers[room] = Dimmer(*args, name=room)
+        for room, pin_number in configuration.dimmers.items():
+            self.dimmers[room] = Dimmer(pin_number, name=room)
 
     def set(self, requested_levels):
         """ Sets duty cycles according to requested light levels """

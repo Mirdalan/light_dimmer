@@ -1,5 +1,5 @@
 [Unit]
-Description= Raspberry PI GPIO software PWM based light dimmers controller
+Description= Raspberry PI GPIO PWM based light dimmers controller
 After=network.target
 
 [Service]

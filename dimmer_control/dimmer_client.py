@@ -22,8 +22,8 @@ if __name__ == '__main__':
         try:
             for room in pwm_duty_cycles.keys():
                 pwm_duty_cycles[room] = float(input("Set light level in room %s to: " % room))
-                if pwm_duty_cycles[room] < 0 or pwm_duty_cycles[room] > 100:
-                    raise ValueError("Light level should be <0:100>, got %d instead." % pwm_duty_cycles[room])
+                if pwm_duty_cycles[room] < 0 or pwm_duty_cycles[room] > 1024:
+                    raise ValueError("Light level should be <0:1024>, got %d instead." % pwm_duty_cycles[room])
             request_set_light_levels(pwm_duty_cycles)
         except ValueError as e:
             print("\n%s\n" % e)

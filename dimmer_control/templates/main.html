@@ -8,18 +8,18 @@
 	<title>Dimmer control mini site</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="author" content="Michał Chrzanowski">
-	<link rel="shortcut icon" href="static/favicon.png">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
 	
 	<!-- CSS -->
-	<link href="static/css/spark.min.css" rel="stylesheet">
+	<link href="{{ url_for('static', filename='css/spark.min.css') }}" rel="stylesheet">
 	
 	<!-- JS -->
-	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="static/js/spark.min.js"></script>
+	<script src="{{ url_for('static', filename='jquery-1.11.1.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/spark.min.js') }}"></script>
 	
 	<!-- Support for IE8 HTML5 elements -->
 	<!--[if lt IE 9]>
-		<script src="static/js/html5shiv.js"></script>
+		<script src="{{ url_for('static', filename='js/html5shiv.js') }}"></script>
 	<![endif]-->
 </head>
 <body style="background-color: #9b969c">
@@ -30,7 +30,7 @@
 	<div class="row">
     {% for room in rooms %}
     <div class="col of-{{ columns }} push-30">
-		<h2 class="herotype center lime">{{ room }} {{ current_level }}</h2>
+		<h2 class="herotype center lime">{{ room }}</h2>
 
         {% for level in levels %}
             {% if current_level is equalto level %}
