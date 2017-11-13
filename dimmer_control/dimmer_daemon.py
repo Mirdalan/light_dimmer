@@ -25,7 +25,7 @@ class Dimmer:
     """
     Single dimmer object allowing to control the dimmer features.
     """
-    def __init__(self, pin_number, duty_cycle=0, name=''):
+    def __init__(self, pin_number, frequency_divisor, duty_cycle=0, name=''):
         """
         Initializing a single Dimmer object with given or default parameters:
         :param pin_number: Raspberry PI GPIO channel according to wiringPiSetup...
@@ -34,6 +34,7 @@ class Dimmer:
         self.name = name
         logger.debug("Initiating dimmer %s." % self.name)
         wiringpi.pinMode(pin_number, wiringpi.PWM_OUTPUT)
+        wiringpi.pwmSetClock(frequency_divisor)
         self.pin_number = pin_number
         self.duty_cycle = duty_cycle
 
@@ -41,6 +42,27 @@ class Dimmer:
         """ sets a given duty cycle """
         wiringpi.pwmWrite(self.pin_number, duty_cycle)
         self.duty_cycle = duty_cycle
+
+    def increment_or_skip_limit(self, requested_duty_cycle):
+        """ increments duty cycle or skips to end if in range of no visible effect values """
+        if self.duty_cycle > configuration.duty_high_limit:
+            self.set_duty_cycle(requested_duty_cycle)
+        else:
+            self.set_duty_cycle(self.duty_cycle + 1)
+
+    def decrement_or_hit_limit(self):
+        """ decrements duty cycle or skips to end of range of no visible effect values """
+        if self.duty_cycle > configuration.duty_high_limit:
+            self.set_duty_cycle(configuration.duty_high_limit)
+        else:
+            self.set_duty_cycle(self.duty_cycle - 1)
+
+    def set_duty_cycle_one_step_towards_level(self, requested_duty_cycle):
+        """ decides if duty cycle needs to be incremented or decremented """
+        if self.duty_cycle < requested_duty_cycle:
+            self.increment_or_skip_limit(requested_duty_cycle)
+        if self.duty_cycle > requested_duty_cycle:
+            self.decrement_or_hit_limit()
 
     def shutdown(self):
         """ Cleans GPIO configuration for this dimmer GPIO channel """
@@ -59,8 +81,8 @@ class DimmersController:
         """
         wiringpi.wiringPiSetupGpio()
         self.dimmers = {}
-        for room, pin_number in configuration.dimmers.items():
-            self.dimmers[room] = Dimmer(pin_number, name=room)
+        for room, args in configuration.dimmers.items():
+            self.dimmers[room] = Dimmer(*args, name=room)
 
     def set(self, requested_levels):
         """ Sets duty cycles according to requested light levels """
@@ -80,10 +102,7 @@ class DimmersController:
         while self.any_of_dimmers_not_set(requested_levels):
             for room, level in requested_levels.items():
                 dimmer = self.dimmers[room]
-                if dimmer.duty_cycle < level:
-                    dimmer.set_duty_cycle(dimmer.duty_cycle + 1)
-                if dimmer.duty_cycle > level:
-                    dimmer.set_duty_cycle(dimmer.duty_cycle - 1)
+                dimmer.set_duty_cycle_one_step_towards_level(level)
                 sleep(configuration.fade_sleep_time)
         for room, level in requested_levels.items():
             logger.debug("Finished setting duty cycle for %s dimmer to %f." % (room, level))
